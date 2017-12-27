@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@types/node": "^8.5.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "open-simplex-noise": "^1.4.1",
+    "seedrandom": "^2.4.3",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
