@@ -4,15 +4,48 @@
 		<meta charset="UTF-8">
 		<title>Sandbox</title>
 		<style>
-		canvas{
-			margin:0px;
-			padding:0px;
-		}
+			div, canvas {
+				display:block;
+				float:left;
+			}
+			body {
+				margin: 0;
+				font-family: Verdana;
+			}
+			#overlay {
+				position: absolute;
+				color: #fff;
+				padding: 20px;
+				width: 160px;
+			}
+			#canvas {
+				display: block;
+			}
+			#assets {
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="final"></div>
+		<div id="assets">
+			<!--<img id="landscape-image" src="assets/Heightmap.png"/>-->
+			<img id="landscape-image" width=2000 height=2000/>
+		</div>
 		<canvas id="canvas"></canvas>
-		<script src="assets/bundle.js"></script>
+
+		<div class="controlPanel" style="z-index:9;position:absolute">
+			<p>
+				<label for=selectModel>Model</label>
+				<select id="selectModel">
+					<option value='box'>Box</option>
+					<option value='sphere'>Sphere</option>
+				</select>
+			</p>
+		</div>
+		<div id="renderer"  style="width:130px;height:130px;padding:5px;border:1px solid black;"></div>
+		<div id="renderer2" style="width:130px;height:130px;padding:5px;border:1px solid black;"></div>
+		<button id="action">action</button>
+		<script src="bundle.js"></script>
 	</body>
 </html>

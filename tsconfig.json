@@ -12,12 +12,12 @@
 		  "es2015",
 		  "DOM"
 		],
-		"noImplicitAny": true,
+		"noImplicitAny": false,
 		"alwaysStrict": true,
 		"experimentalDecorators": true
 	},
 	"include": [
-		"app/**/**.ts",
+		"app/**/**.ts"
 	],
 	"exclude": [
 		"node_modules"
