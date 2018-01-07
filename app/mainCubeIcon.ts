@@ -30,7 +30,8 @@ class CubeIcon {
 				perspective-origin: 50% <%= width %>px;
 				width: calc(<%= width %>px * 2.2);
 				height: calc(<%= width %>px * 2.2);
-				opacity:.8;
+				opacity: .8;
+				cursor: pointer;
 			}
 			#<%= uuid %> .cube-wrap:hover {
 				opacity:1;
@@ -69,7 +70,7 @@ class CubeIcon {
 				height: calc(<%= width %>px * 2);
 				background: rgba(255,255,255,0.1);
 				box-shadow: inset 0 0 30px rgba(125,125,125,0.8);
-				font-size: 5px;
+				font-size: 11px;
 				text-align: center;
 				line-height: calc(<%= width %>px * 2);
 				color: rgba(0,0,0,0.5);
@@ -84,11 +85,12 @@ class CubeIcon {
 
 				transform: translateZ(-<%= width %>px) rotateY(180deg);
 			}
+
 			#<%= uuid %> .depth div.right-pane {
 				-webkit-transform:rotateY(-270deg) translateX(<%= width %>px);
 				-webkit-transform-origin: top right;
 
-				-moz-transform:rotateY(-270deg) translateX(<%= width %>px);
+				-moz-transform:rotateY(-270deg) translateX(px);
 				-moz-transform-origin: top right;
 
 				-ms-transform:rotateY(-270deg) translateX(<%= width %>px);
@@ -147,16 +149,26 @@ class CubeIcon {
 
 				transform: translateZ(<%= width %>px);
 			}
+
 			#<%= uuid %> .depth div.cube-pan {
-				font-size:14px;
-				color:#F7F7F7;
+				font-size: 14px;
+				color: #F7F7F7;
 			}
 
 			#<%= uuid %> .depth div.cube-pane {
 			}
 
 			#<%= uuid %> .selected .depth div.cube-pane{
-				border:1px solid black;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				border:1px solid #555;
+			}
+			#<%= uuid %> .depth:hover div.cube-pane{
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				border:1px solid #AAA;
 			}
 		</style>
 	`;
@@ -217,12 +229,20 @@ class CubeIcon {
 			v.innerHTML=text;
 		})
 	}
+
 	public setImages(url:string,width:number=30,faces:string='FKTBLR'){
 		this.getPanes(faces).forEach(function(v:HTMLDivElement){
 			v.style.background = url ? (" url('"+url+"') no-repeat left top"):'';
 			v.style.backgroundSize = url ? (''+width+'px '+width+'px'):'';
 		});
 	}
+
+	public reset(){
+		this.setSelected(false);
+		this.setImages(null);
+		this.setText('');
+	}
+
 	private getPanes(faces='FKTBLR'):HTMLDivElement[]{
 		return _.filter(<HTMLDivElement[]>(this.element.querySelectorAll('.cube-pane')),function(v){
 			return faces.indexOf(v.dataset['side'])!==-1;
@@ -230,26 +250,33 @@ class CubeIcon {
 	}
 }
 
-var ic1:CubeIcon,ic2:CubeIcon;
+var ic1:CubeIcon,ic2:CubeIcon,ic3:CubeIcon;
 const createArtPacks = require('artpacks');
 const packs = createArtPacks(['./ProgrammerArt-ResourcePack.zip']);
 packs.on('loadedURL', function(url){
 	ic1 = new CubeIcon(document.querySelector('#renderer' ),{
-		//width : 12,
-		width : 50,
+		width : 12,
 		fn : function(cubeIcon:CubeIcon){
-			cubeIcon.setImages(packs.getTexture('dirt'),100);
+			cubeIcon.setImages(packs.getTexture('dirt'),30);
 		}
 	});
 	ic2 = new CubeIcon(document.querySelector('#renderer2'),{
-		//width : 12,
-		width : 50,
+		width : 12,
 		fn : function(cubeIcon:CubeIcon){
-			cubeIcon.setImages(packs.getTexture('stone'),100);
+			cubeIcon.setImages(packs.getTexture('stone'),30);
 		}
 	});
 	ic2.setSelected(true);
 	ic2.setText("12");
+	ic3 = new CubeIcon(document.querySelector('#renderer3'),{
+		width : 12,
+		fn : function(cubeIcon:CubeIcon){
+			cubeIcon.setImages(packs.getTexture('stone'),30);
+		}
+	});
+	ic3.setSelected(true);
+	ic3.setText("12");
+	ic3.reset();
 });
 (<any>window).e={
 	packs
