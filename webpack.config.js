@@ -1,6 +1,8 @@
-var path = require("path");
+const path = require("path");
+const utils = require('./utils');
+const isProduction = false;
 function resolve (dir) {
-return path.join(__dirname, '..', dir)
+	return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
@@ -13,6 +15,23 @@ module.exports = {
 	},
 	module: {
 		rules :[{
+			test: /\.vue$/,
+			loader: 'vue-loader',
+			options: {
+				loaders: utils.cssLoaders({
+					sourceMap: true,
+					extract: isProduction
+				}),
+				cssSourceMap: !isProduction,
+				cacheBusting: true,
+				transformToRequire: {
+					video: ['src', 'poster'],
+					source: 'src',
+					img: 'src',
+					image: 'xlink:href'
+				}
+			}
+		},{
 			test: [/\.js$/],
 			exclude: /node_modules/,
 			loader: 'babel-loader'
@@ -43,6 +62,6 @@ module.exports = {
 		extensions: ['.ts', '.js', '.es6']
 	},
 	node: {
-	  fs: 'empty'
+	fs: 'empty'
 	}
 };
